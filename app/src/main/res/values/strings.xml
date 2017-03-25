@@ -8,5 +8,6 @@
     <string name="title_activity_display_stax">display_stax</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_nav_bar">NavBarActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">Flash Stax</string>
+    <string name="title_activity_categories">Categories</string>
 </resources>
