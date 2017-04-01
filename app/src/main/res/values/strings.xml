@@ -16,4 +16,9 @@
         <item>Card 2</item>
         <item>Card 3</item>
     </string-array>
+    <string name="title_activity_edit_card">Edit Card</string>
+    <string name="front_text_box_prompt_text">Front Text</string>
+    <string name="back_text_box_prompt_text">Back Text</string>
+    <string name="save_button_text">Save</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>

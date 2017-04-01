@@ -31,6 +31,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.mercy.flashstax.Main2Activity" />
         </activity>
+        <activity
+            android:name=".EditCardActivity"
+            android:label="@string/title_activity_edit_card"
+            android:parentActivityName=".EditStackActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.mercy.flashstax.EditStackActivity" />
+        </activity>
     </application>
 
 </manifest>
