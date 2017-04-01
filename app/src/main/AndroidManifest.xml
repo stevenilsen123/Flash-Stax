@@ -21,7 +21,16 @@
         <activity
             android:name=".CategoriesActivity"
             android:label="@string/title_activity_categories"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".EditStackActivity"
+            android:label="@string/title_activity_edit_stack"
+            android:parentActivityName=".Main2Activity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.mercy.flashstax.Main2Activity" />
+        </activity>
     </application>
 
 </manifest>

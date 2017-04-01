@@ -13,9 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.widget.Button;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,15 @@ public class Main2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        button=(Button)findViewById(R.id.buttonFakeStack);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),EditStackActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -93,4 +105,5 @@ public class Main2Activity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

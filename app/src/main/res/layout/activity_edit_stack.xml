@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.mercy.flashstax.Main2Activity">
+    tools:context="edu.mercy.flashstax.EditStackActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,25 +20,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main2"
-        android:id="@+id/include" />
+    <include layout="@layout/content_edit_stack" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addStack"
+        android:id="@+id/addCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@android:color/white"
         app:srcCompat="@android:drawable/ic_input_add" />
-
-    <Button
-        android:id="@+id/buttonFakeStack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:text="Fake Stack"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|center_horizontal" />
 
 </android.support.design.widget.CoordinatorLayout>

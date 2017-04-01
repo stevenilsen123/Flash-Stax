@@ -10,4 +10,10 @@
     <string name="title_activity_nav_bar">NavBarActivity</string>
     <string name="title_activity_main2">Flash Stax</string>
     <string name="title_activity_categories">Categories</string>
+    <string name="title_activity_edit_stack">Edit Stack</string>
+    <string-array name="edit_stack_test">
+        <item>Card 1</item>
+        <item>Card 2</item>
+        <item>Card 3</item>
+    </string-array>
 </resources>
