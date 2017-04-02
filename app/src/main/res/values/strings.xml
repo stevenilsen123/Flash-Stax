@@ -21,4 +21,5 @@
     <string name="back_text_box_prompt_text">Back Text</string>
     <string name="save_button_text">Save</string>
     <string name="cancel_button_text">Cancel</string>
+    <string name="card_name_text">Card Name</string>
 </resources>

@@ -45,8 +45,9 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
      */
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        Intent newAct = new Intent(getApplicationContext(), EditCardActivity.class);
-        startActivity(newAct);
+        Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
+        intent.putExtra("cardName", ((TextView) view).getText());
+        startActivity(intent);
         /*Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
                 Toast.LENGTH_SHORT).show();*/
     }
