@@ -2,6 +2,7 @@ package edu.mercy.flashstax;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
     ListView listView;
+    static final int SET_CARD_NAME_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,19 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
         Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
         intent.putExtra("cardName", ((TextView) view).getText());
-        startActivity(intent);
-        /*Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-                Toast.LENGTH_SHORT).show();*/
+        startActivityForResult(intent,SET_CARD_NAME_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String newCardName;
+
+        // Check which request we're responding to
+        if (requestCode == SET_CARD_NAME_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                newCardName = data.getStringExtra("newCardName");
+                Toast.makeText(this, newCardName, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
