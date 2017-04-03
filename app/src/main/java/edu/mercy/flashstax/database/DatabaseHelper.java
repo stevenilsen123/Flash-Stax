@@ -1,11 +1,14 @@
-package edu.mercy.flashstax;
+package edu.mercy.flashstax.database;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+    public static final String TAG = "DBHelper";
+
     public static final String DATABASE_NAME = "FlashStax.db";
     public static final int DATABASE_VER = 1;
 
@@ -66,16 +69,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + ");";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+        super(context, DATABASE_NAME, null, DATABASE_VER);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(SQL_CREATE_TABLE_CARDS);
+        db.execSQL(SQL_CREATE_TABLE_CATEGORIES);
+        db.execSQL(SQL_CREATE_TABLE_STACKS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.w(TAG,
+                "Upgrading the database from version " + oldVersion + " to "+ newVersion);
+        // clear all data
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CARDS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STACKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
 
+        // recreate the tables
+        onCreate(db);
     }
 }
