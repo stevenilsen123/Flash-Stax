@@ -3,6 +3,7 @@ package edu.mercy.flashstax;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.InputType;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +14,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button button;
+    //------------------------------------
+    //  Declarations
+    //------------------------------------
+    ListView listView;
+    final Context context = this;
+    private Button button;
+    private EditText stack1;
+    private EditText stack2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +53,67 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //from content_main2.xml
+        stack1 = (EditText) findViewById(R.id.editStack1);
+        stack2 = (EditText) findViewById(R.id.editStack2);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addStack);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-            }
-        });
+
+                //---------------------
+                // Text prompt
+                //---------------------
+                //Upon button press, create user dialogue box
+                //Get input, set to variable, then add variable to list.
+
+                //  get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.prompts, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                //  sets prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogUserInput);
+
+                //  set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        //  Enter button logic
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  need to add stack to list
+                                        stack1.setText(userInput.getText());
+                                        stack2.setText(userInput.getText());
+                                    }
+                                })
+                        //  Cancel button logic
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                //  create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                //  display
+                alertDialog.show();
+
+                //listView = (ListView) findViewById(R.id.listStacks);
+                //listView.setOnItemClickListener(this);
+            }//end of onClick
+        }); //End of fab listener
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
