@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.Activity;
@@ -32,6 +33,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,9 +44,11 @@ public class Main2Activity extends AppCompatActivity
     //------------------------------------
     ListView listView;
     final Context context = this;
+    static final int SET_STACK_NAME_REQUEST = 1;
+
     private Button button;
     private EditText stack1;
-    private EditText stack2;
+    private TextView text1;
 
 
     @Override
@@ -54,8 +59,8 @@ public class Main2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //from content_main2.xml
-        stack1 = (EditText) findViewById(R.id.editStack1);
-        stack2 = (EditText) findViewById(R.id.editStack2);
+        //stack1 = (EditText) findViewById(R.id.editStack1);
+        text1 = (TextView) findViewById(R.id.textView1);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addStack);
@@ -91,8 +96,8 @@ public class Main2Activity extends AppCompatActivity
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         //  need to add stack to list
-                                        stack1.setText(userInput.getText());
-                                        stack2.setText(userInput.getText());
+                                        text1.setText(userInput.getText());
+
                                     }
                                 })
                         //  Cancel button logic
@@ -185,4 +190,25 @@ public class Main2Activity extends AppCompatActivity
         return true;
     }
 
-}
+
+    //  Method to go to edit stack screen?
+    public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+        Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
+        intent.putExtra("cardName", ((TextView) view).getText());
+        startActivityForResult(intent,SET_STACK_NAME_REQUEST);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String newCardName;
+
+        // Check which request we're responding to
+        if (requestCode == SET_STACK_NAME_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                newCardName = data.getStringExtra("newCardName");
+                Toast.makeText(this, newCardName, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+}//end of class

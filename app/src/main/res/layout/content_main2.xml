@@ -12,6 +12,7 @@
     Text Dialogue stuff
     -->
 
+<!--
     <EditText
         android:id="@+id/editStack1"
         android:layout_width="0dp"
@@ -22,15 +23,16 @@
 
     </EditText>
 
-    <EditText
-        android:id="@+id/editStack2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="96dp">
+    -->
 
-    </EditText>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press + to add new stack name."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="176dp" />
 
     <ListView
         android:id="@+id/listStacks"
@@ -48,6 +50,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
