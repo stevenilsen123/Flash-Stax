@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.Activity;
@@ -36,6 +37,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,10 +48,20 @@ public class Main2Activity extends AppCompatActivity
     ListView listView;
     final Context context = this;
     static final int SET_STACK_NAME_REQUEST = 1;
+    String input;
 
+    //  Fake Stack button to access next screen
     private Button button;
-    private EditText stack1;
+    //  Simple text view to display user input
     private TextView text1;
+
+    //  List view stuff
+    //  **************** Note, add to list method at bottom - 'addListItem'
+    ArrayList<String> listStacks = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    private ListView myListView;
+
+
 
 
     @Override
@@ -58,20 +71,30 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //from content_main2.xml
-        //stack1 = (EditText) findViewById(R.id.editStack1);
+        //******from content_main2.xml
+        //  Set up text view to print
         text1 = (TextView) findViewById(R.id.textView1);
 
+
+        //  List view and adapter setup
+        myListView = (ListView) findViewById(R.id.listStacks);
+
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listStacks);
+        myListView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addStack);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //  Pop up at bottom
+                Snackbar.make(view, "Oh glorious computer gods, make this work!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
+
                 //---------------------
-                // Text prompt
+                // Input Dialog popup
                 //---------------------
                 //Upon button press, create user dialogue box
                 //Get input, set to variable, then add variable to list.
@@ -95,8 +118,11 @@ public class Main2Activity extends AppCompatActivity
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        //  need to add stack to list
-                                        text1.setText(userInput.getText());
+                                        //  Get user input, convert to string, and store
+                                        input = userInput.getText().toString();
+                                        //  Change display text, and add to list
+                                        text1.setText(input);
+                                        addListItem(input);
 
                                     }
                                 })
@@ -114,10 +140,11 @@ public class Main2Activity extends AppCompatActivity
                 //  display
                 alertDialog.show();
 
-                //listView = (ListView) findViewById(R.id.listStacks);
-                //listView.setOnItemClickListener(this);
+
+
+
             }//end of onClick
-        }); //End of fab listener
+        }); //*******End of fab listener
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -210,5 +237,14 @@ public class Main2Activity extends AppCompatActivity
             }
         }
     }
+
+    //--------------------------------
+    //  Method to add items to list
+    //--------------------------------
+    private void addListItem(String item) {
+        listStacks.add(item);
+        adapter.notifyDataSetChanged();
+
+    }//end of addListItem
 
 }//end of class
