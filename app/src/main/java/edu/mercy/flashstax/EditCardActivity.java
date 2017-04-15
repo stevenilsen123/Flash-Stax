@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditCardActivity extends AppCompatActivity implements OnClickListener {
     EditText cardName;
@@ -46,11 +47,32 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        boolean allFieldsFilled;
+
         if (id == R.id.buttonSave) {
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("newCardName",this.cardName.getText().toString());
-            setResult(RESULT_OK,returnIntent);
-            finish();
+            // make sure all fields are filled in
+            allFieldsFilled = true;
+
+            String cardname = String.valueOf(cardName.getText());
+            String fronttext = String.valueOf(frontText.getText());
+            String backtext = String.valueOf(backText.getText());
+
+            if (cardname.equals("") || fronttext.equals("") || backtext.equals("")) {
+                Toast.makeText(this, "All fields must be filled in", Toast.LENGTH_SHORT).show();
+                allFieldsFilled = false;
+            }
+
+            //if all fields filled in
+            if (allFieldsFilled) {
+                // add new card to database
+
+
+                // return card name to edit stack
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("newCardName",this.cardName.getText().toString());
+                setResult(RESULT_OK,returnIntent);
+                finish();
+            }
         } else if (id == R.id.buttonCancel) {
             Intent returnIntent = new Intent();
             setResult(RESULT_CANCELED, returnIntent);
