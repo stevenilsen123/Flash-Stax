@@ -10,12 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
-    ListView listView;
+    EditText textStackName;
+    ListView listStacks;
     static final int SET_CARD_NAME_REQUEST = 1;
 
     @Override
@@ -35,8 +37,10 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView = (ListView) findViewById(R.id.listCards);
-        listView.setOnItemClickListener(this);
+        textStackName = (EditText) findViewById(R.id.textStackName);
+
+        listStacks = (ListView) findViewById(R.id.listCards);
+        listStacks.setOnItemClickListener(this);
         }
     /*
      * Parameters:
@@ -47,8 +51,12 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
      */
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+        Bundle extras = new Bundle();
+        extras.putString("stackName", String.valueOf(textStackName.getText()));
+        extras.putString("cardName", (String) ((TextView) view).getText());
+
         Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
-        intent.putExtra("cardName", ((TextView) view).getText());
+        intent.putExtras(extras);
         startActivityForResult(intent,SET_CARD_NAME_REQUEST);
     }
     @Override

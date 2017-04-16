@@ -8,9 +8,9 @@ public class Category implements Serializable {
     public static final String TAG = "Category";
     private static final long serialVersionUID = -7406082437623008161L;
 
+    private int mId;
     private String mName;
     private int mColor;
-    private int mIndex;
     private boolean mActiveFlag;
     private Date mDateTimeCR;
     private Date mDateTimeLM;
@@ -20,12 +20,17 @@ public class Category implements Serializable {
     public Category(String name, int color, int index, boolean activeFlag, Date dateTimeCR, Date dateTimeLM) {
         this.mName = name;
         this.mColor = color;
-        this.mIndex = index;
         this.mActiveFlag = activeFlag;
         this.mDateTimeCR = dateTimeCR;
         this.mDateTimeLM = dateTimeLM;
     }
 
+    public int getId() {
+        return mId;
+    }
+    public void setId(int mId) {
+        this.mId = mId;
+    }
     public String getName() {
         return mName;
     }
@@ -37,12 +42,6 @@ public class Category implements Serializable {
     }
     public void setColor(int mColor) {
         this.mColor = mColor;
-    }
-    public int getIndex() {
-        return mIndex;
-    }
-    public void setIndex(int mIndex) {
-        this.mIndex = mIndex;
     }
     public boolean getActiveFlag() {
         return mActiveFlag;

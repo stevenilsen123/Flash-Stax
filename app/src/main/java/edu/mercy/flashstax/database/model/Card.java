@@ -8,19 +8,21 @@ public class Card implements Serializable {
     public static final String TAG = "Card";
     private static final long serialVersionUID = -7406082437623008161L;
 
+    private int mId;
     private String mStackName;
-    private int mIndex;
+    private String mCardName;
     private String mFrontText;
     private String mBackText;
     private boolean mActiveFlag;
     private Date mDateTimeCR;
     private Date mDateTimeLM;
+    private Stack mStack;
 
     public Card() {}
 
-    public Card(String stackName, int index, String frontText, String backText, boolean activeFlag, Date dateTimeCR, Date dateTimeLM) {
+    public Card(String stackName, int index, String cardName, String frontText, String backText, boolean activeFlag, Date dateTimeCR, Date dateTimeLM) {
         this.mStackName = stackName;
-        this.mIndex = index;
+        this.mCardName = cardName;
         this.mFrontText = frontText;
         this.mBackText = backText;
         this.mActiveFlag = activeFlag;
@@ -28,17 +30,23 @@ public class Card implements Serializable {
         this.mDateTimeLM = dateTimeLM;
     }
 
+    public int getId() {
+        return mId;
+    }
+    public void setId(int mId) {
+        this.mId = mId;
+    }
     public String getStackName() {
         return mStackName;
     }
     public void setStackName(String mStackName) {
         this.mStackName = mStackName;
     }
-    public int getIndex() {
-        return mIndex;
+    public String getCardName() {
+        return mCardName;
     }
-    public void setIndex(int mIndex) {
-        this.mIndex = mIndex;
+    public void setCardName(String mCardName) {
+        this.mCardName = mCardName;
     }
     public String getFrontText() {
         return mFrontText;
@@ -70,4 +78,6 @@ public class Card implements Serializable {
     public void setDateTimeLM(Date mDateTimeLM) {
         this.mDateTimeLM = mDateTimeLM;
     }
+    public Stack getStack() { return mStack; }
+    public void setStack(Stack mStack) { this.mStack = mStack; }
 }

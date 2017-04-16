@@ -8,9 +8,9 @@ public class Stack implements Serializable {
     public static final String TAG = "Stack";
     private static final long serialVersionUID = -7406082437623008161L;
 
+    private int mId;
     private String mName;
     private String mCategory;
-    private int mIndex;
     private boolean mActiveFlag;
     private Date mDateTimeCR;
     private Date mDateTimeLM;
@@ -20,15 +20,18 @@ public class Stack implements Serializable {
     public Stack(String name, String category, int index, boolean activeFlag, Date dateTimeCR, Date dateTimeLM) {
         this.mName = name;
         this.mCategory = category;
-        this.mIndex = index;
         this.mActiveFlag = activeFlag;
         this.mDateTimeCR = dateTimeCR;
         this.mDateTimeLM = dateTimeLM;
     }
 
-    public String getName() {
-        return mName;
+    public int getId() {
+        return mId;
     }
+    public void setId(int mId) {
+        this.mId = mId;
+    }
+    public String getName() { return mName; }
     public void setName(String mName) {
         this.mName = mName;
     }
@@ -37,12 +40,6 @@ public class Stack implements Serializable {
     }
     public void setCategory(String mCategory) {
         this.mCategory = mCategory;
-    }
-    public int getIndex() {
-        return mIndex;
-    }
-    public void setIndex(int mIndex) {
-        this.mIndex = mIndex;
     }
     public boolean getActiveFlag() {
         return mActiveFlag;
