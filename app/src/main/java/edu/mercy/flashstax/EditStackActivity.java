@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
     EditText stackName;
+    EditText category;
     ListView listStacks;
     static final int SET_CARD_NAME_REQUEST = 1;
 
@@ -38,6 +39,9 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         stackName = (EditText) findViewById(R.id.textStackName);
+        stackName.setText(getIntent().getStringExtra("stackName"));
+        category = (EditText) findViewById(R.id.textCategory);
+        category.setText(getIntent().getStringExtra("category"));
 
         listStacks = (ListView) findViewById(R.id.listCards);
         listStacks.setOnItemClickListener(this);
