@@ -122,18 +122,17 @@
         android:id="@+id/listCards"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:entries="@array/edit_stack_test"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSave"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCategory"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSave"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/textCategory"></ListView>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

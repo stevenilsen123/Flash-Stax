@@ -1,24 +1,38 @@
 package edu.mercy.flashstax;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import edu.mercy.flashstax.database.dao.dbHelper;
+
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
+    SQLiteDatabase newDB;
+    ArrayList<String> results = new ArrayList<>();
+    ArrayList<String> listCards = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    
     EditText stackName;
     EditText category;
-    ListView listStacks;
+    ListView cardsList;
     static final int SET_CARD_NAME_REQUEST = 1;
 
     @Override
@@ -43,8 +57,14 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         category = (EditText) findViewById(R.id.textCategory);
         category.setText(getIntent().getStringExtra("category"));
 
-        listStacks = (ListView) findViewById(R.id.listCards);
-        listStacks.setOnItemClickListener(this);
+        cardsList = (ListView) findViewById(R.id.listCards);
+        openAndQueryDatabase();
+
+        for (String r: results) {
+            addListItem(r);
+        }
+
+        cardsList.setOnItemClickListener(this);
         }
     /*
      * Parameters:
@@ -76,4 +96,31 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
             }
         }
     }
+    private void openAndQueryDatabase() {
+        try {
+            dbHelper dataHelper = new dbHelper(this.getApplicationContext());
+            newDB = dataHelper.getWritableDatabase();
+            Cursor c = newDB.rawQuery("SELECT name FROM cards " +
+                    "WHERE stackName = "+ stackName, null);
+
+            if (c != null ) {
+                if  (c.moveToFirst()) {
+                    do {
+                        String cardName = c.getString(c.getColumnIndex("name"));
+                        results.add(cardName);
+                    }while (c.moveToNext());
+                }
+            }
+        } catch (SQLiteException se ) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
+        }
+    }
+    //--------------------------------
+    //  Method to add items to list
+    //--------------------------------
+    private void addListItem(String item) {
+        listCards.add(item);
+        adapter.notifyDataSetChanged();
+
+    }//end of addListItem
 }

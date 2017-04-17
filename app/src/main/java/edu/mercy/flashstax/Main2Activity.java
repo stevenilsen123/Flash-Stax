@@ -48,7 +48,6 @@ public class Main2Activity extends AppCompatActivity
     SQLiteDatabase newDB;
     ArrayList<String> results = new ArrayList<>();
 
-    ListView listView;
     final Context context = this;
     static final int SET_STACK_NAME_REQUEST = 1;
     String input;

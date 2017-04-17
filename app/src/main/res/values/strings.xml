@@ -22,12 +22,7 @@
     <string name="stack_name_text">Stack Name</string>
     <string name="category_name_text">Category</string>
     <string name="prompts_prompt_text">Enter Stack Name:</string>
-
-    <string-array name="edit_stack_test">
-        <item>Card 1</item>
-        <item>Card 2</item>
-        <item>Card 3</item>
-    </string-array>
-    <string name="fake_stack_name">Fake Stack</string>
     <string name="add_stack_message">Press + to add a new stack!</string>
+
+    <string name="fake_stack_name">Fake Stack</string>
 </resources>
