@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
-    EditText textStackName;
+    EditText stackName;
     ListView listStacks;
     static final int SET_CARD_NAME_REQUEST = 1;
 
@@ -35,9 +35,9 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-        textStackName = (EditText) findViewById(R.id.textStackName);
+        stackName = (EditText) findViewById(R.id.textStackName);
 
         listStacks = (ListView) findViewById(R.id.listCards);
         listStacks.setOnItemClickListener(this);
@@ -52,7 +52,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
         Bundle extras = new Bundle();
-        extras.putString("stackName", String.valueOf(textStackName.getText()));
+        extras.putString("stackName", String.valueOf(stackName.getText()));
         extras.putString("cardName", (String) ((TextView) view).getText());
 
         Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);

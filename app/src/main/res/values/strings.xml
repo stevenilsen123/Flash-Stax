@@ -14,6 +14,7 @@
     <string name="title_activity_edit_card">Edit Card</string>
     <string name="front_text_box_prompt_text">Front Text</string>
     <string name="back_text_box_prompt_text">Back Text</string>
+    <string name="play_button_text">Play</string>
     <string name="save_button_text">Save</string>
     <string name="delete_button_text">Delete</string>
     <string name="cancel_button_text">Cancel</string>

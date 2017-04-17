@@ -83,6 +83,18 @@ public class Main2Activity extends AppCompatActivity
         for (String r: results) {
             addListItem(r);
         }
+        stackList.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                Bundle extras = new Bundle();
+                extras.putString("stackName", (String) ((TextView) view).getText());
+                extras.putString("category", "category1");
+
+                Intent intent = new Intent(getApplicationContext(), EditStackActivity.class);
+                intent.putExtras(extras);
+                startActivityForResult(intent,SET_STACK_NAME_REQUEST);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addStack);
         fab.setOnClickListener(new View.OnClickListener() {

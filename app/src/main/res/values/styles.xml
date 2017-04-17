@@ -17,6 +17,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.PlayButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="AppTheme.DeleteButton" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/colorWarning</item>
     </style>
