@@ -3,7 +3,6 @@ package edu.mercy.flashstax;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.text.InputType;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,20 +16,9 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -73,7 +61,7 @@ public class Main2Activity extends AppCompatActivity
 
         //******from content_main2.xml
         //  Set up text view to print
-        text1 = (TextView) findViewById(R.id.textView1);
+        text1 = (TextView) findViewById(R.id.textAddStackMessage);
 
 
         //  List view and adapter setup

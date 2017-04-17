@@ -15,9 +15,12 @@
     <string name="front_text_box_prompt_text">Front Text</string>
     <string name="back_text_box_prompt_text">Back Text</string>
     <string name="save_button_text">Save</string>
+    <string name="delete_button_text">Delete</string>
     <string name="cancel_button_text">Cancel</string>
     <string name="card_name_text">Card Name</string>
     <string name="stack_name_text">Stack Name</string>
+    <string name="category_name_text">Category</string>
+    <string name="prompts_prompt_text">Enter Stack Name:</string>
 
     <string-array name="edit_stack_test">
         <item>Card 1</item>
@@ -25,4 +28,5 @@
         <item>Card 3</item>
     </string-array>
     <string name="fake_stack_name">Fake Stack</string>
+    <string name="add_stack_message">Press + to add a new stack!</string>
 </resources>
