@@ -1,8 +1,12 @@
 package edu.mercy.flashstax;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,27 +31,33 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import edu.mercy.flashstax.database.dao.CardDAO;
+import edu.mercy.flashstax.database.dao.StackDAO;
+import edu.mercy.flashstax.database.dao.dbHelper;
+import edu.mercy.flashstax.database.model.Card;
+import edu.mercy.flashstax.database.model.Stack;
+
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //------------------------------------
     //  Declarations
     //------------------------------------
+    public static final String TAG = "Main2Activity";
+    private StackDAO mStackDao;
+    SQLiteDatabase newDB;
+    ArrayList<String> results = new ArrayList<>();
+
     ListView listView;
     final Context context = this;
     static final int SET_STACK_NAME_REQUEST = 1;
     String input;
 
-    //  Fake Stack button to access next screen
-    private Button button;
-    //  Simple text view to display user input
-    private TextView text1;
-
     //  List view stuff
     //  **************** Note, add to list method at bottom - 'addListItem'
     ArrayList<String> listStacks = new ArrayList<String>();
     ArrayAdapter<String> adapter;
-    private ListView myListView;
+    private ListView stackList;
 
 
 
@@ -59,28 +69,25 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //******from content_main2.xml
-        //  Set up text view to print
-        text1 = (TextView) findViewById(R.id.textAddStackMessage);
+        mStackDao = new StackDAO(this);
 
-
-        //  List view and adapter setup
-        myListView = (ListView) findViewById(R.id.listStacks);
+        //  List view setup
+        stackList = (ListView) findViewById(R.id.listStacks);
+        openAndQueryDatabase();
 
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listStacks);
-        myListView.setAdapter(adapter);
+        stackList.setAdapter(adapter);
+
+        for (String r: results) {
+            addListItem(r);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addStack);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  Pop up at bottom
-                Snackbar.make(view, "Oh glorious computer gods, make this work!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-
                 //---------------------
                 // Input Dialog popup
                 //---------------------
@@ -108,10 +115,11 @@ public class Main2Activity extends AppCompatActivity
                                     public void onClick(DialogInterface dialog, int id) {
                                         //  Get user input, convert to string, and store
                                         input = userInput.getText().toString();
-                                        //  Change display text, and add to list
-                                        text1.setText(input);
+                                        //  Add to list
                                         addListItem(input);
-
+                                        // Add to database
+                                        Stack createdStack = mStackDao.createStack(input, "category1");
+                                        Log.d(TAG, "added stack : "+ createdStack.getName());
                                     }
                                 })
                         //  Cancel button logic
@@ -143,15 +151,6 @@ public class Main2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        button=(Button)findViewById(R.id.buttonFakeStack);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),EditStackActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -234,5 +233,24 @@ public class Main2Activity extends AppCompatActivity
         adapter.notifyDataSetChanged();
 
     }//end of addListItem
+
+    private void openAndQueryDatabase() {
+        try {
+            dbHelper dataHelper = new dbHelper(this.getApplicationContext());
+            newDB = dataHelper.getWritableDatabase();
+            Cursor c = newDB.rawQuery("SELECT name FROM stacks", null);
+
+            if (c != null ) {
+                if  (c.moveToFirst()) {
+                    do {
+                        String stackName = c.getString(c.getColumnIndex("name"));
+                        results.add(stackName);
+                    }while (c.moveToNext());
+                }
+            }
+        } catch (SQLiteException se ) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
+        }
+    }
 
 }//end of class
