@@ -25,4 +25,6 @@
         <item>Card 3</item>
     </string-array>
     <string name="fake_stack_name">Fake Stack</string>
+
+
 </resources>
