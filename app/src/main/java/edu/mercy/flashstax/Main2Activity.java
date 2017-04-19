@@ -52,6 +52,7 @@ public class Main2Activity extends AppCompatActivity
 
     //  Fake Stack button to access next screen
     private Button button;
+    private Button buttonPlay;
     //  Simple text view to display user input
     private TextView text1;
 
@@ -156,11 +157,21 @@ public class Main2Activity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //  Fake Stack Button, go to edit screen.
         button=(Button)findViewById(R.id.buttonFakeStack);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),EditStackActivity.class);
+                startActivity(i);
+            }
+        });
+        //  Play Button, go to play screen.
+        buttonPlay=(Button)findViewById(R.id.buttonPlay);
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),PlayActivity.class);
                 startActivity(i);
             }
         });
@@ -210,6 +221,9 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_categories) {
             Intent newAct = new Intent(getApplicationContext(), CategoriesActivity.class);
             startActivity(newAct);
+        } else if (id == R.id.nav_play) {
+            Intent newAct = new Intent(getApplicationContext(), PlayActivity.class);
+            startActivity(newAct);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -218,12 +232,13 @@ public class Main2Activity extends AppCompatActivity
     }
 
 
-    //  Method to go to edit stack screen?
+
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
         Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
         intent.putExtra("cardName", ((TextView) view).getText());
         startActivityForResult(intent,SET_STACK_NAME_REQUEST);
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String newCardName;

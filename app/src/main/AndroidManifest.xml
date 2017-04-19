@@ -40,6 +40,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.mercy.flashstax.EditStackActivity" />
         </activity>
+        <activity
+            android:name="edu.mercy.flashstax.PlayActivity"
+            android:label="@string/title_activity_play"
+            android:parentActivityName=".Main2Activity"
+            android:theme="@style/AppTheme">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.mercy.flashstax.PlayActivity" />
+        </activity>
     </application>
 
 </manifest>
