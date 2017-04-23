@@ -56,6 +56,10 @@ public class CardDAO {
 
 	public Card createCard(String stackName, String cardName, String frontText, String backText) {
 		ContentValues values = new ContentValues();
+		Cursor c = mDatabase.rawQuery("SELECT _id FROM stacks WHERE name = '" + stackName + "'", null);
+		c.moveToFirst();
+		int colIndex = c.getColumnIndex("_id");
+		int stackId = c.getInt(colIndex);
 
 		values.put(dbHelper.COL_CARD_STACK_NAME, stackName);
 		values.put(dbHelper.COL_CARD_NAME, cardName);
@@ -64,6 +68,7 @@ public class CardDAO {
 		values.put(dbHelper.COL_CARD_ACTIVE_FLAG, true);
 		values.put(dbHelper.COL_CARD_DATE_TIME_CR, (int) new Date().getTime()/1000);
 		values.put(dbHelper.COL_CARD_DATE_TIME_LM, (int) new Date().getTime()/1000);
+		values.put(dbHelper.COL_CARD_STACK_ID, stackId);
 
 		long insertId = mDatabase.insert(
 				dbHelper.TABLE_CARDS, null, values);
@@ -74,6 +79,7 @@ public class CardDAO {
 		cursor.moveToFirst();
 		Card newCard = cursorToCard(cursor);
 		cursor.close();
+		c.close();
 		return newCard;
 	}
 

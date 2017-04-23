@@ -46,8 +46,12 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            Bundle extras = new Bundle();
+            extras.putString("stackName", String.valueOf(stackName.getText()));
+
+            Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
+            intent.putExtras(extras);
+            startActivityForResult(intent,SET_CARD_NAME_REQUEST);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -59,6 +63,11 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
 
         cardsList = (ListView) findViewById(R.id.listCards);
         openAndQueryDatabase();
+
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                listCards);
+        cardsList.setAdapter(adapter);
 
         for (String r: results) {
             addListItem(r);
@@ -92,7 +101,8 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 newCardName = data.getStringExtra("newCardName");
-                Toast.makeText(this, newCardName, Toast.LENGTH_SHORT).show();
+                addListItem(newCardName);
+                Toast.makeText(this, newCardName + " added!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -100,8 +110,10 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         try {
             dbHelper dataHelper = new dbHelper(this.getApplicationContext());
             newDB = dataHelper.getWritableDatabase();
-            Cursor c = newDB.rawQuery("SELECT name FROM cards " +
-                    "WHERE stackName = "+ stackName, null);
+
+            String locStackName = String.valueOf(stackName.getText());
+            String queryText = "SELECT name FROM cards WHERE stackName = '"+ locStackName +"'";
+            Cursor c = newDB.rawQuery(queryText, null);
 
             if (c != null ) {
                 if  (c.moveToFirst()) {
