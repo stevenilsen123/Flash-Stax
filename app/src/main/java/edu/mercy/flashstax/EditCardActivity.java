@@ -1,6 +1,9 @@
 package edu.mercy.flashstax;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,11 +15,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import edu.mercy.flashstax.database.dao.CardDAO;
+import edu.mercy.flashstax.database.dao.dbHelper;
 import edu.mercy.flashstax.database.model.Card;
 
 public class EditCardActivity extends AppCompatActivity implements OnClickListener {
     public static final String TAG = "EditCardActivity";
+    SQLiteDatabase newDB;
+    ArrayList<String> results = new ArrayList<>();
     private CardDAO mCardDao;
 
     TextView stackName;
@@ -25,6 +33,9 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
     EditText backText;
     Button saveButton;
     Button cancelButton;
+
+    String passedStackName;
+    String passedCardName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +56,17 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
         saveButton = (Button) findViewById(R.id.buttonSave);
         cancelButton = (Button) findViewById(R.id.buttonCancel);
 
-        stackName.setText(getIntent().getStringExtra("stackName"));
-        cardName.setText(getIntent().getStringExtra("cardName"));
+        passedStackName = getIntent().getStringExtra("stackName");
+        passedCardName = getIntent().getStringExtra("cardName");
+        stackName.setText(passedStackName);
+        cardName.setText(passedCardName);
+
+        //fill in the front and back text if a card name was passed
+        if (passedCardName != null) {
+            openAndQueryDatabase();
+            frontText.setText(results.get(0));
+            backText.setText(results.get(1));
+        }
 
         saveButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
@@ -87,6 +107,32 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
             Intent returnIntent = new Intent();
             setResult(RESULT_CANCELED, returnIntent);
             finish();
+        }
+    }
+    private void openAndQueryDatabase() {
+        try {
+            dbHelper dataHelper = new dbHelper(this.getApplicationContext());
+            newDB = dataHelper.getWritableDatabase();
+
+            String locStackName = String.valueOf(stackName.getText());
+            String locCardName = String.valueOf(cardName.getText());
+            String queryText = "SELECT frontText, backText FROM cards " +
+                    "WHERE stackName = '"+ locStackName +"' AND " +
+                    "name = '"+ locCardName +"'";
+            Cursor c = newDB.rawQuery(queryText, null);
+
+            if (c != null ) {
+                if  (c.moveToFirst()) {
+                    do {
+                        String frontText = c.getString(c.getColumnIndex("frontText"));
+                        String backText = c.getString(c.getColumnIndex("backText"));
+                        results.add(frontText);
+                        results.add(backText);
+                    }while (c.moveToNext());
+                }
+            }
+        } catch (SQLiteException se ) {
+            Log.e(getClass().getSimpleName(), "Could not create or Open the database");
         }
     }
 }
