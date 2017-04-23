@@ -36,6 +36,8 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
 
     String passedStackName;
     String passedCardName;
+    String passedFrontText;
+    String passedBackText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +60,13 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
 
         passedStackName = getIntent().getStringExtra("stackName");
         passedCardName = getIntent().getStringExtra("cardName");
+        passedFrontText = getIntent().getStringExtra("frontText");
+        passedBackText = getIntent().getStringExtra("backText");
+
         stackName.setText(passedStackName);
         cardName.setText(passedCardName);
-
-        //fill in the front and back text if a card name was passed
-        if (passedCardName != null) {
-            openAndQueryDatabase();
-            frontText.setText(results.get(0));
-            backText.setText(results.get(1));
-        }
+        frontText.setText(passedFrontText);
+        backText.setText(passedBackText);
 
         saveButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);

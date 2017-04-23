@@ -84,13 +84,39 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
      */
     @Override
     public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        Bundle extras = new Bundle();
-        extras.putString("stackName", String.valueOf(stackName.getText()));
-        extras.putString("cardName", (String) ((TextView) view).getText());
+        String locStackName = String.valueOf(stackName.getText());
+        String locCardName = (String) ((TextView) view).getText();
+        String frontText;
+        String backText;
 
-        Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
+        // get the front and back text from the database
+        removeListItem((int) id);
+        dbHelper dataHelper = new dbHelper(this.getApplicationContext());
+        newDB = dataHelper.getWritableDatabase();
+        String queryText = "SELECT frontText, backText FROM cards " +
+                "WHERE stackName = '" + locStackName + "' AND " +
+                "name = '" + locCardName + "'";
+        Cursor c = newDB.rawQuery(queryText, null);
+        c.moveToFirst();
+        frontText = c.getString(c.getColumnIndex("frontText"));
+        backText = c.getString(c.getColumnIndex("backText"));
+
+        Bundle extras = new Bundle();
+        extras.putString("stackName", locStackName);
+        extras.putString("cardName", locCardName);
+        extras.putString("frontText", frontText);
+        extras.putString("backText", backText);
+
+        //remove the card that was click on from the list and the database
+
+        queryText = "DELETE FROM cards " +
+                "WHERE stackName = '" + locStackName + "' AND " +
+                "name = '" + locCardName + "'";
+        newDB.execSQL(queryText);
+
+        Intent intent = new Intent(this.getApplicationContext(), EditCardActivity.class);
         intent.putExtras(extras);
-        startActivityForResult(intent,SET_CARD_NAME_REQUEST);
+        startActivityForResult(intent, SET_CARD_NAME_REQUEST);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -133,6 +159,12 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     private void addListItem(String item) {
         listCards.add(item);
         adapter.notifyDataSetChanged();
-
+    }//end of addListItem
+    //--------------------------------
+    //  Method to remove items from list
+    //--------------------------------
+    private void removeListItem(int index) {
+        listCards.remove(index);
+        adapter.notifyDataSetChanged();
     }//end of addListItem
 }
