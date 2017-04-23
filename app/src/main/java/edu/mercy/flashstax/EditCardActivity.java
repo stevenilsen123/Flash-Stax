@@ -33,6 +33,7 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
     EditText backText;
     Button saveButton;
     Button cancelButton;
+    Button deleteButton;
 
     String passedStackName;
     String passedCardName;
@@ -57,6 +58,7 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
         backText = (EditText) findViewById(R.id.textBack);
         saveButton = (Button) findViewById(R.id.buttonSave);
         cancelButton = (Button) findViewById(R.id.buttonCancel);
+        deleteButton = (Button) findViewById(R.id.buttonDelete);
 
         passedStackName = getIntent().getStringExtra("stackName");
         passedCardName = getIntent().getStringExtra("cardName");
@@ -70,6 +72,14 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
 
         saveButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
+
+        //disable the delete button if this is a new card
+        if (passedCardName == null) {
+            deleteButton.setVisibility(View.INVISIBLE);
+        } else {
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(this);
+        }
     }
     
     @Override
@@ -104,16 +114,23 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
                 finish();
             }
         } else if (id == R.id.buttonCancel) {
+            Intent returnIntent = new Intent();
+
             //add card back to database if this was an edit
             if (passedCardName != null) {
                 mCardDao = new CardDAO(this.getApplicationContext());
                 mCardDao.createCard(passedStackName,passedCardName,passedFrontText,passedBackText);
+                returnIntent.putExtra("oldCardName", passedCardName);
             }
 
             //return to previous screen
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("oldCardName", passedCardName);
             setResult(RESULT_CANCELED, returnIntent);
+            finish();
+        } else if (id == R.id.buttonDelete) {
+            // return without adding the card back to the database
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("deleteFlag", true);
+            setResult(RESULT_OK, returnIntent);
             finish();
         }
     }

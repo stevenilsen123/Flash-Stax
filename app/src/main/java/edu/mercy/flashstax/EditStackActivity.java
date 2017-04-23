@@ -33,7 +33,8 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     EditText stackName;
     EditText category;
     ListView cardsList;
-    static final int SET_CARD_NAME_REQUEST = 1;
+    static final int EDIT_CARD_REQUEST = 1;
+    static final int ADD_CARD_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
 
             Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
             intent.putExtras(extras);
-            startActivityForResult(intent,SET_CARD_NAME_REQUEST);
+            startActivityForResult(intent,ADD_CARD_REQUEST);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -116,20 +117,24 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
 
         Intent intent = new Intent(this.getApplicationContext(), EditCardActivity.class);
         intent.putExtras(extras);
-        startActivityForResult(intent, SET_CARD_NAME_REQUEST);
+        startActivityForResult(intent, EDIT_CARD_REQUEST);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String newCardName;
         String oldCardName;
+        boolean deleteFlag;
 
         // Check which request we're responding to
-        if (requestCode == SET_CARD_NAME_REQUEST) {
+        if (requestCode == EDIT_CARD_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                newCardName = data.getStringExtra("newCardName");
-                addListItem(newCardName);
-                Toast.makeText(this, newCardName + " added!", Toast.LENGTH_SHORT).show();
+                deleteFlag = data.getBooleanExtra("deleteFlag",false);
+                if (deleteFlag == false) {
+                    newCardName = data.getStringExtra("newCardName");
+                    addListItem(newCardName);
+                    Toast.makeText(this, newCardName + " added!", Toast.LENGTH_SHORT).show();
+                }
             } else if (resultCode == RESULT_CANCELED) {
                 oldCardName = data.getStringExtra("oldCardName");
                 addListItem(oldCardName);
