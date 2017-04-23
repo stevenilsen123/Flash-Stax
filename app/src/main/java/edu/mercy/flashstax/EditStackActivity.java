@@ -121,6 +121,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String newCardName;
+        String oldCardName;
 
         // Check which request we're responding to
         if (requestCode == SET_CARD_NAME_REQUEST) {
@@ -129,6 +130,9 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
                 newCardName = data.getStringExtra("newCardName");
                 addListItem(newCardName);
                 Toast.makeText(this, newCardName + " added!", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                oldCardName = data.getStringExtra("oldCardName");
+                addListItem(oldCardName);
             }
         }
     }

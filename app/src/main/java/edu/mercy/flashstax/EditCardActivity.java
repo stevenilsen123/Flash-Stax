@@ -104,7 +104,15 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
                 finish();
             }
         } else if (id == R.id.buttonCancel) {
+            //add card back to database if this was an edit
+            if (passedCardName != null) {
+                mCardDao = new CardDAO(this.getApplicationContext());
+                mCardDao.createCard(passedStackName,passedCardName,passedFrontText,passedBackText);
+            }
+
+            //return to previous screen
             Intent returnIntent = new Intent();
+            returnIntent.putExtra("oldCardName", passedCardName);
             setResult(RESULT_CANCELED, returnIntent);
             finish();
         }
