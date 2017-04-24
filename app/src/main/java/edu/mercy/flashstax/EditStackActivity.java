@@ -211,11 +211,15 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
                 if (deleteFlag == false) {
                     newCardName = data.getStringExtra("newCardName");
                     addListItem(newCardName);
-                    Toast.makeText(this, newCardName + " added!", Toast.LENGTH_SHORT).show();
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 oldCardName = data.getStringExtra("oldCardName");
                 addListItem(oldCardName);
+            }
+        } else if (requestCode == ADD_CARD_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                newCardName = data.getStringExtra("newCardName");
+                addListItem(newCardName);
             }
         }
     }
