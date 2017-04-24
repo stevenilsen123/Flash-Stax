@@ -226,9 +226,6 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_categories) {
             Intent newAct = new Intent(getApplicationContext(), CategoriesActivity.class);
             startActivity(newAct);
-        } else if (id == R.id.nav_play) {
-            Intent newAct = new Intent(getApplicationContext(), PlayActivity.class);
-            startActivity(newAct);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
