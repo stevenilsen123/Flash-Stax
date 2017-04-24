@@ -163,7 +163,7 @@ public class Main2Activity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            // do nothing;
         }
     }
 
@@ -272,5 +272,4 @@ public class Main2Activity extends AppCompatActivity
             return listView.getChildAt(childIndex);
         }
     }
-
 }//end of class

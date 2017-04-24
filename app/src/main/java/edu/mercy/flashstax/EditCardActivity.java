@@ -160,4 +160,9 @@ public class EditCardActivity extends AppCompatActivity implements OnClickListen
             Log.e(getClass().getSimpleName(), "Could not create or Open the database");
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

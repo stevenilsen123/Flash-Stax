@@ -258,4 +258,9 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         listCards.remove(index);
         adapter.notifyDataSetChanged();
     }//end of addListItem
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }
