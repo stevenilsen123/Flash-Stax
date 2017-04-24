@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,10 +23,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import edu.mercy.flashstax.database.dao.StackDAO;
 import edu.mercy.flashstax.database.dao.dbHelper;
+import edu.mercy.flashstax.database.model.Stack;
 
 public class EditStackActivity extends AppCompatActivity implements OnItemClickListener{
     SQLiteDatabase newDB;
+    StackDAO stackDAO;
     ArrayList<String> results = new ArrayList<>();
     ArrayList<String> listCards = new ArrayList<String>();
     ArrayAdapter<String> adapter;
@@ -33,6 +37,15 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     EditText stackName;
     EditText category;
     ListView cardsList;
+    Button playButton;
+    Button saveButton;
+    Button deleteButton;
+    Button cancelButton;
+
+    String passedStackName;
+    String passedCategory;
+    long passedPosition;
+    
     static final int EDIT_CARD_REQUEST = 1;
     static final int ADD_CARD_REQUEST = 2;
 
@@ -47,20 +60,24 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Bundle extras = new Bundle();
-            extras.putString("stackName", String.valueOf(stackName.getText()));
-
-            Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
-            intent.putExtras(extras);
-            startActivityForResult(intent,ADD_CARD_REQUEST);
+                Bundle extras = new Bundle();
+                extras.putString("stackName", String.valueOf(stackName.getText()));
+    
+                Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
+                intent.putExtras(extras);
+                startActivityForResult(intent,ADD_CARD_REQUEST);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        passedStackName = getIntent().getStringExtra("stackName");
+        passedCategory = getIntent().getStringExtra("category");
+        passedPosition = getIntent().getLongExtra("position", -1);
+
         stackName = (EditText) findViewById(R.id.textStackName);
-        stackName.setText(getIntent().getStringExtra("stackName"));
+        stackName.setText(passedStackName);
         category = (EditText) findViewById(R.id.textCategory);
-        category.setText(getIntent().getStringExtra("category"));
+        category.setText(passedCategory);
 
         cardsList = (ListView) findViewById(R.id.listCards);
         openAndQueryDatabase();
@@ -75,7 +92,54 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         }
 
         cardsList.setOnItemClickListener(this);
-        }
+        
+        // set up buttons
+        playButton = (Button) findViewById(R.id.buttonPlay);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("this is a test","test");
+            }
+        });
+
+        saveButton = (Button) findViewById(R.id.buttonSave);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //override stack name and category in the database
+                stackDAO = new StackDAO(getApplicationContext());
+                Stack myStack = stackDAO.getStackByName(passedStackName);
+
+                String newStackName = String.valueOf(stackName.getText());
+                String newCategory = String.valueOf(category.getText());
+
+                stackDAO.updateStack(myStack, newStackName, newCategory);
+
+                //return to previous screen
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("newStackName", newStackName);
+                returnIntent.putExtra("position", passedPosition);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        });
+
+        deleteButton = (Button) findViewById(R.id.buttonDelete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("this is a test","test");
+            }
+        });
+
+        cancelButton = (Button) findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("this is a test","test");
+            }
+        });
+    }
     /*
      * Parameters:
         adapter - The AdapterView where the click happened.

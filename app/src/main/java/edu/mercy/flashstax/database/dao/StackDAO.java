@@ -10,6 +10,7 @@ import android.util.Log;
 import edu.mercy.flashstax.database.model.Stack;
 import edu.mercy.flashstax.database.model.Card;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,6 +89,20 @@ public class StackDAO {
 				+ " = " + id, null);
 	}
 
+	public void updateStack(Stack stack, String newName, String newCategory) {
+		ContentValues values = new ContentValues();
+
+		values.put(dbHelper.COL_STACK_NAME, newName);
+		values.put(dbHelper.COL_STACK_CATEGORY, newCategory);
+		values.put(dbHelper.COL_STACK_ACTIVE_FLAG, true);
+		values.put(dbHelper.COL_STACK_DATE_TIME_CR, stack.getDateTimeCR());
+		values.put(dbHelper.COL_STACK_DATE_TIME_LM, (int) new Date().getTime()/1000);
+
+		int id = stack.getId();
+		mDatabase.update(dbHelper.TABLE_STACKS, values, dbHelper.COL_STACK_ID + " = ?",
+				new String[] {Integer.toString(id)});
+	}
+
 	public List<Stack> getAllStacks() {
 		List<Stack> listStacks = new ArrayList<Stack>();
 
@@ -105,6 +120,18 @@ public class StackDAO {
 			cursor.close();
 		}
 		return listStacks;
+	}
+
+	public Stack getStackByName(String name) {
+		Cursor cursor = mDatabase.query(dbHelper.TABLE_STACKS, mAllColumns,
+				dbHelper.COL_STACK_NAME + " = ?",
+				new String[] { name }, null, null, null);
+		if (cursor != null) {
+			cursor.moveToFirst();
+		}
+
+		Stack stack = cursorToStack(cursor);
+		return stack;
 	}
 
 	public Stack getStackById(int id) {
@@ -125,8 +152,8 @@ public class StackDAO {
 		stack.setName(cursor.getString(1));
 		stack.setCategory(cursor.getString(2));
 		stack.setActiveFlag(cursor.getInt(3) > 0);
-		stack.setDateTimeCR(new Date(cursor.getLong(4)));
-		stack.setDateTimeLM(new Date(cursor.getLong(5)));
+		stack.setDateTimeCR(cursor.getInt(4));
+		stack.setDateTimeLM(cursor.getInt(5));
 		return stack;
 	}
 

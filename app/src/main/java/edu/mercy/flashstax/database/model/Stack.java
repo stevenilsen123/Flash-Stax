@@ -1,7 +1,6 @@
 package edu.mercy.flashstax.database.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Stack implements Serializable {
 
@@ -12,12 +11,12 @@ public class Stack implements Serializable {
     private String mName;
     private String mCategory;
     private boolean mActiveFlag;
-    private Date mDateTimeCR;
-    private Date mDateTimeLM;
+    private int mDateTimeCR;
+    private int mDateTimeLM;
 
     public Stack() {}
 
-    public Stack(String name, String category, int index, boolean activeFlag, Date dateTimeCR, Date dateTimeLM) {
+    public Stack(String name, String category, int index, boolean activeFlag, int dateTimeCR, int dateTimeLM) {
         this.mName = name;
         this.mCategory = category;
         this.mActiveFlag = activeFlag;
@@ -47,16 +46,16 @@ public class Stack implements Serializable {
     public void setActiveFlag(boolean mActiveFlag) {
         this.mActiveFlag = mActiveFlag;
     }
-    public Date getDateTimeCR() {
+    public int getDateTimeCR() {
         return mDateTimeCR;
     }
-    public void setDateTimeCR(Date mDateTimeCR) {
+    public void setDateTimeCR(int mDateTimeCR) {
         this.mDateTimeCR = mDateTimeCR;
     }
-    public Date getDateTimeLM() {
+    public int getDateTimeLM() {
         return mDateTimeLM;
     }
-    public void setDateTimeLM(Date mDateTimeLM) {
+    public void setDateTimeLM(int mDateTimeLM) {
         this.mDateTimeLM = mDateTimeLM;
     }
 }

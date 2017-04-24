@@ -49,7 +49,7 @@ public class Main2Activity extends AppCompatActivity
     ArrayList<String> results = new ArrayList<>();
 
     final Context context = this;
-    static final int SET_STACK_NAME_REQUEST = 1;
+    static final int EDIT_STACK_REQUEST = 1;
     String input;
 
     //  List view stuff
@@ -74,7 +74,7 @@ public class Main2Activity extends AppCompatActivity
         stackList = (ListView) findViewById(R.id.listStacks);
         openAndQueryDatabase();
 
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 listStacks);
         stackList.setAdapter(adapter);
@@ -88,10 +88,11 @@ public class Main2Activity extends AppCompatActivity
                 Bundle extras = new Bundle();
                 extras.putString("stackName", (String) ((TextView) view).getText());
                 extras.putString("category", "category1");
+                extras.putLong("position", position);
 
                 Intent intent = new Intent(getApplicationContext(), EditStackActivity.class);
                 intent.putExtras(extras);
-                startActivityForResult(intent,SET_STACK_NAME_REQUEST);
+                startActivityForResult(intent,EDIT_STACK_REQUEST);
             }
         });
 
@@ -215,23 +216,20 @@ public class Main2Activity extends AppCompatActivity
         return true;
     }
 
-
-    //  Method to go to edit stack screen?
-    public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        Intent intent = new Intent(getApplicationContext(), EditCardActivity.class);
-        intent.putExtra("cardName", ((TextView) view).getText());
-        startActivityForResult(intent,SET_STACK_NAME_REQUEST);
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String newCardName;
+        String newStackName;
+        long position;
 
         // Check which request we're responding to
-        if (requestCode == SET_STACK_NAME_REQUEST) {
+        if (requestCode == EDIT_STACK_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                newCardName = data.getStringExtra("newCardName");
-                Toast.makeText(this, newCardName, Toast.LENGTH_SHORT).show();
+                newStackName = data.getStringExtra("newStackName");
+                position = data.getLongExtra("position", -1);
+
+                listStacks.set((int) position, newStackName);
+                adapter.notifyDataSetChanged();
+
             }
         }
     }
@@ -261,6 +259,17 @@ public class Main2Activity extends AppCompatActivity
             }
         } catch (SQLiteException se ) {
             Log.e(getClass().getSimpleName(), "Could not create or Open the database");
+        }
+    }
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
         }
     }
 
