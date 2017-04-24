@@ -35,6 +35,11 @@
         <item>Card 2 back</item>
     </string-array>
 
+    <string-array name="card3">
+        <item>Card 3 front</item>
+        <item>Card 3 back</item>
+    </string-array>
+
     <string name="fake_stack_name">Fake Stack</string>
     <string name="title_activity_play">PlayActivity</string>
 </resources>

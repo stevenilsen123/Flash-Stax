@@ -19,6 +19,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+//----------------------------------------------------------------------
+//  This class handles the play screen, which displays cards and their
+//  front/back text.  The cards can be cycled through.
+//----------------------------------------------------------------------
+
 public class PlayActivity extends AppCompatActivity {
 
     //------------------------------------
@@ -28,6 +33,7 @@ public class PlayActivity extends AppCompatActivity {
     //  Create arrays to later pull in data from strings.xml
     String[] card1;
     String[] card2;
+    String[] card3;
 
     //  Create button holder variables
     private Button buttonFlip;
@@ -36,7 +42,7 @@ public class PlayActivity extends AppCompatActivity {
     //  flags
     int cardIndex = 0;
     int sideIndex = 0;
-    int numCards = 1;
+    int numCards = 2;
 
 
     //  create variables to hold textviews
@@ -61,6 +67,7 @@ public class PlayActivity extends AppCompatActivity {
         Resources res = getResources();
         card1 = res.getStringArray(R.array.card1);
         card2 = res.getStringArray(R.array.card2);
+        card3 = res.getStringArray(R.array.card3);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +82,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         });//end of fab
 
-        //  Flip Button, go to play screen.
+        //  Flip Button, flip card value.
         buttonFlip=(Button)findViewById(R.id.buttonFlip);
         buttonFlip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +91,22 @@ public class PlayActivity extends AppCompatActivity {
                 flipCard();
             }
         });
-        //  Play Button, go to play screen.
+        //  Next Button, cycle to next card.
         buttonNext=(Button)findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  Call next card method
                 nextCard();
+            }
+        });
+        //  Previous Button, cycle to previous card.
+        buttonNext=(Button)findViewById(R.id.buttonPrevious);
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  Call next card method
+                previousCard();
             }
         });
 
@@ -112,7 +128,12 @@ public class PlayActivity extends AppCompatActivity {
             //  else increment through stack/list
             cardIndex++;
             sideIndex = 0;
-            textCard.setText(card2[sideIndex]);
+            if (cardIndex == 1) {
+                textCard.setText(card2[sideIndex]);
+            }
+            else {
+                textCard.setText(card3[sideIndex]);
+            }
         }
     }//end of nextCard
 
@@ -134,7 +155,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         }
         // placeholder card 2
-        else {
+        else if (cardIndex == 1) {
             if (sideIndex == 0) {
                 sideIndex = 1;
                 textCard.setText(card2[sideIndex]);
@@ -144,7 +165,46 @@ public class PlayActivity extends AppCompatActivity {
                 textCard.setText(card2[sideIndex]);
             }
         }
+
+        //  placer holder card 3
+        else {
+            if (sideIndex == 0) {
+                sideIndex = 1;
+                textCard.setText(card3[sideIndex]);
+            }
+            else {
+                sideIndex = 0;
+                textCard.setText(card3[sideIndex]);
+            }
+        }
+
     }//end of flipCard
 
+    //--------------------------------
+    //  Method to cycle backwards through cards
+    //--------------------------------
+    private void previousCard () {
+        //  Check if at end of stack/list
+        if (cardIndex == 0) {
+            //  if at start, cycle to end
+            cardIndex = numCards;
+            sideIndex = 0;
+            textCard.setText(card3[sideIndex]);
+        }
+        else {
+            //  else decrement through stack/list
+            cardIndex--;
+            sideIndex = 0;
+
+            //  placerholder card 2
+            if (cardIndex == 1) {
+                textCard.setText(card2[sideIndex]);
+            }
+            //  placerholder card 1
+            else {
+                textCard.setText(card1[sideIndex]);
+            }
+        }
+    }//end of previousCard
 
 }//end of class

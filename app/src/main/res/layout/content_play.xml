@@ -25,47 +25,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline3"
-        app:layout_constraintGuide_begin="367dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="367dp" />
+        app:layout_constraintGuide_percent="0.96" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline4"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="364dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="20dp" />
+        app:layout_constraintGuide_percent="0.04" />
 
     <Button
         android:id="@+id/buttonNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="47dp"
         android:text="Next"
-        android:layout_marginLeft="32dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="99dp"
+        android:layout_marginBottom="104dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.306" />
+
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="113dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="103dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:text="Previous"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/guideline2"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.136"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintHorizontal_bias="0.68" />
 
     <Button
         android:id="@+id/buttonFlip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="272dp"
+        android:layout_height="36dp"
         android:text="Flip"
         app:layout_constraintRight_toLeftOf="@+id/guideline3"
         android:layout_marginRight="33dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="99dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.717"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline4"
+        app:layout_constraintHorizontal_bias="0.727"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="33dp" />
 
@@ -74,8 +85,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline2"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="192dp"
         tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="192dp" />
+        tools:layout_editor_absoluteX="192dp"
+        app:layout_constraintGuide_percent="0.5" />
 
 </android.support.constraint.ConstraintLayout>

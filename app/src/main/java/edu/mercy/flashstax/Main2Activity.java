@@ -39,6 +39,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+//----------------------------------------------------------------------
+//  This class handles the main screen of the app, which allows you to add stacks
+//  and select them to be edited.
+//----------------------------------------------------------------------
+
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
