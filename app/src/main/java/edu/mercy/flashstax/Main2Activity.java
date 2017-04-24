@@ -95,8 +95,8 @@ public class Main2Activity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 //  Pop up at bottom
-                Snackbar.make(view, "Oh glorious computer gods, make this work!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Oh glorious computer gods, make this work!", Snackbar.LENGTH_LONG)
+                //      .setAction("Action", null).show();
 
 
                 //---------------------
@@ -127,7 +127,7 @@ public class Main2Activity extends AppCompatActivity
                                         //  Get user input, convert to string, and store
                                         input = userInput.getText().toString();
                                         //  Change display text, and add to list
-                                        text1.setText(input);
+                                        //  text1.setText(input);
                                         addListItem(input);
 
                                     }

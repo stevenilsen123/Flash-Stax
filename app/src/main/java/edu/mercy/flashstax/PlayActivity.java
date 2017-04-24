@@ -69,18 +69,6 @@ public class PlayActivity extends AppCompatActivity {
         card2 = res.getStringArray(R.array.card2);
         card3 = res.getStringArray(R.array.card3);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  Text popup at bottom
-                Snackbar.make(view, "Button pressed", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-
-
-            }
-        });//end of fab
 
         //  Flip Button, flip card value.
         buttonFlip=(Button)findViewById(R.id.buttonFlip);
@@ -143,7 +131,7 @@ public class PlayActivity extends AppCompatActivity {
     private void flipCard () {
         //  Check card index, flip then display
 
-        //  placerholder Card 1
+        //  placeholder Card 1
         if (cardIndex == 0) {
             if (sideIndex == 0) {
                 sideIndex = 1;
@@ -166,7 +154,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         }
 
-        //  placer holder card 3
+        //  placeholder card 3
         else {
             if (sideIndex == 0) {
                 sideIndex = 1;
@@ -196,11 +184,11 @@ public class PlayActivity extends AppCompatActivity {
             cardIndex--;
             sideIndex = 0;
 
-            //  placerholder card 2
+            //  placeholder card 2
             if (cardIndex == 1) {
                 textCard.setText(card2[sideIndex]);
             }
-            //  placerholder card 1
+            //  placeholder card 1
             else {
                 textCard.setText(card1[sideIndex]);
             }
