@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.mercy.flashstax.Main2Activity">
+    tools:context="edu.mercy.flashstax.PlayActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,26 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addStack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/content_main2" />
-
-    <Button
-        android:id="@+id/buttonPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:text="Play"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="top|center_horizontal" />
+    <include layout="@layout/content_play" />
 
 </android.support.design.widget.CoordinatorLayout>

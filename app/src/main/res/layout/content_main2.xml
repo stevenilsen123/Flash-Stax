@@ -9,26 +9,13 @@
     tools:showIn="@layout/app_bar_main2">
 
     <!--
-    Text Dialogue stuff
+    Stack Select screen.
     -->
-
-<!--
-    <EditText
-        android:id="@+id/editStack1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp">
-
-    </EditText>
-
-    -->
-
     <TextView
         android:id="@+id/textAddStackMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="Press + to add new stack."
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -45,11 +32,12 @@
         android:id="@+id/listStacks"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

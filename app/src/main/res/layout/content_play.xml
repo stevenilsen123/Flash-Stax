@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="edu.mercy.flashstax.PlayActivity"
+    tools:showIn="@layout/activity_play"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <TextView
+        android:id="@+id/textViewCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Card"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="191dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline3"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="327dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="58dp" />
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="105dp"
+        android:layout_marginLeft="8dp"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/buttonPrevious"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="357dp" />
+
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="105dp"
+        android:text="Previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonNext"
+        tools:layout_editor_absoluteY="357dp" />
+
+    <Button
+        android:id="@+id/buttonFlip"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="34dp"
+        android:text="Flip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
