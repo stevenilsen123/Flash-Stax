@@ -8,15 +8,6 @@
     tools:context="edu.mercy.flashstax.CategoriesActivity"
     tools:showIn="@layout/app_bar_categories">
 
-    <TextView
-        android:id="@+id/categoryTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Press + to add new category name."
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="176dp" />
-
     <ListView
         android:id="@+id/listCategories"
         android:layout_width="0dp"

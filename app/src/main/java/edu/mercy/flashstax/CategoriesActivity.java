@@ -42,17 +42,15 @@ import java.util.ArrayList;
 public class CategoriesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ListView listView;
     final Context context = this;
     static final int SET_CATEGORIES_NAME_REQUEST = 1;
     String input;
-
-    //  Simple text view to display user input
-    private TextView categoryText;
+    String dialogCatName;
+    int dialogPosition;
 
     //  List view stuff
     //  **************** Note, add to list method at bottom - 'addListItem'
-    ArrayList<String> listCategories = new ArrayList<String>();
+    ArrayList<String> listCategories = new ArrayList<>();
     ArrayAdapter<String> adapter;
     private ListView categoriesListView;
 
@@ -62,18 +60,72 @@ public class CategoriesActivity extends AppCompatActivity
         setContentView(R.layout.activity_categories);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //******from content_main2.xml
-        //  Set up text view to print
-        categoryText = (TextView) findViewById(R.id.categoryTextView);
+        dialogCatName = null;
+        dialogPosition = -1;
 
         //  List view and adapter setup
         categoriesListView = (ListView) findViewById(R.id.listCategories);
 
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 listCategories);
         categoriesListView.setAdapter(adapter);
+        categoriesListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            //  Method to go to edit category screen?
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                dialogCatName = (String) ((TextView) view).getText();
+                dialogPosition = position;
+                //---------------------
+                // Input Dialog popup
+                //---------------------
+                //Upon list item press, create user dialogue box w/ clicked item
+                //Get input, set to variable, then add variable to list.
+
+                //  get prompts.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.prompts, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                //  sets prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.editTextDialogUserInput);
+                userInput.setText(((TextView) view).getText());
+
+                //  set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setMessage("Enter category name: ")
+                        //  Enter button logic
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        //  Get user input, convert to string, and store
+                                        input = userInput.getText().toString();
+                                        //  Change display text, and add to list
+                                        updateListItem(dialogPosition, dialogCatName);
+                                    }
+                                })
+                        //  Cancel button logic
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                //  create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                //  display
+                alertDialog.show();
+
+            }
+
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addCategory);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +136,7 @@ public class CategoriesActivity extends AppCompatActivity
 
                 //---------------------
                 // Input Dialog popup
-                //---------------------
+                //---------------------////
                 //Upon button press, create user dialogue box
                 //Get input, set to variable, then add variable to list.
 
@@ -103,6 +155,7 @@ public class CategoriesActivity extends AppCompatActivity
                 //  set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
+                        .setMessage("Enter category name: ")
                         //  Enter button logic
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
@@ -110,7 +163,6 @@ public class CategoriesActivity extends AppCompatActivity
                                         //  Get user input, convert to string, and store
                                         input = userInput.getText().toString();
                                         //  Change display text, and add to list
-                                        categoryText.setText(input);
                                         addListItem(input);//
 
                                     }
@@ -195,12 +247,6 @@ public class CategoriesActivity extends AppCompatActivity
         return true;
     }
 
-    //  Method to go to edit category screen?
-    public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-        Intent intent = new Intent(getApplicationContext(), EditCategoryActivity.class);
-        intent.putExtra("categoryName", ((TextView) view).getText());
-        startActivityForResult(intent,SET_CATEGORIES_NAME_REQUEST);
-    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String newCategoryName;
@@ -222,6 +268,11 @@ public class CategoriesActivity extends AppCompatActivity
         listCategories.add(item);
         adapter.notifyDataSetChanged();
 
-    }//end of addListItem
 
+    }//end of addListItem
+    //update list
+    private void updateListItem(int position, String newName) {
+        listCategories.set(position, newName);
+        adapter.notifyDataSetChanged();
+    }
 }

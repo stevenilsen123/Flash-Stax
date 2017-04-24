@@ -114,6 +114,8 @@ public class Main2Activity extends AppCompatActivity
                 //  set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
+                        //probably .set something to nab text from clicked item
+                        .setMessage("Enter stack name: ")
                         //  Enter button logic
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
