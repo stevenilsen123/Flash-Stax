@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,18 +22,14 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import edu.mercy.flashstax.database.dao.CardDAO;
 import edu.mercy.flashstax.database.dao.StackDAO;
 import edu.mercy.flashstax.database.dao.dbHelper;
-import edu.mercy.flashstax.database.model.Card;
 import edu.mercy.flashstax.database.model.Stack;
 
 public class Main2Activity extends AppCompatActivity
@@ -54,12 +49,9 @@ public class Main2Activity extends AppCompatActivity
 
     //  List view stuff
     //  **************** Note, add to list method at bottom - 'addListItem'
-    ArrayList<String> listStacks = new ArrayList<String>();
+    ArrayList<String> listStacks = new ArrayList<>();
     ArrayAdapter<String> adapter;
     private ListView stackList;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,17 +211,25 @@ public class Main2Activity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String newStackName;
         long position;
+        String returnedFrom;
 
         // Check which request we're responding to
         if (requestCode == EDIT_STACK_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                newStackName = data.getStringExtra("newStackName");
-                position = data.getLongExtra("position", -1);
+                returnedFrom = data.getStringExtra("returnedFrom");
 
-                listStacks.set((int) position, newStackName);
-                adapter.notifyDataSetChanged();
-
+                if (returnedFrom.equals("save")) {
+                    newStackName = data.getStringExtra("newStackName");
+                    position = data.getLongExtra("position", -1);
+                    listStacks.set((int) position, newStackName);
+                    adapter.notifyDataSetChanged();
+                } else if (returnedFrom.equals("delete")) {
+                    position = data.getLongExtra("position", -1);
+                    listStacks.remove(position);
+                    adapter.remove(adapter.getItem((int) position));
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
     }

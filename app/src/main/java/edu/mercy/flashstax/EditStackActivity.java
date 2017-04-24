@@ -106,7 +106,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //override stack name and category in the database
+                // override stack name and category in the database
                 stackDAO = new StackDAO(getApplicationContext());
                 Stack myStack = stackDAO.getStackByName(passedStackName);
 
@@ -119,6 +119,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("newStackName", newStackName);
                 returnIntent.putExtra("position", passedPosition);
+                returnIntent.putExtra("returnedFrom", "save");
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
@@ -128,7 +129,17 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("this is a test","test");
+                // delete stack from database
+                stackDAO = new StackDAO(getApplicationContext());
+                Stack myStack = stackDAO.getStackByName(passedStackName);
+                stackDAO.deleteStack(myStack);
+
+                // return to previous screen
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("position", passedPosition);
+                returnIntent.putExtra("returnedFrom", "delete");
+                setResult(RESULT_OK, returnIntent);
+                finish();
             }
         });
 
