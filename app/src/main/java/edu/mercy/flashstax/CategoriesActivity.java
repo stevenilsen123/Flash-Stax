@@ -53,7 +53,7 @@ public class CategoriesActivity extends AppCompatActivity
     ArrayList<String> listCategories = new ArrayList<>();
     ArrayAdapter<String> adapter;
     private ListView categoriesListView;
-/////////
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,8 +163,7 @@ public class CategoriesActivity extends AppCompatActivity
                                         //  Get user input, convert to string, and store
                                         input = userInput.getText().toString();
                                         //  Change display text, and add to list
-                                        addListItem(input);//
-
+                                        addListItem(input);
                                     }
                                 })
                         //  Cancel button logic
