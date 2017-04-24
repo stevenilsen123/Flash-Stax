@@ -44,10 +44,9 @@ public class PlayActivity extends AppCompatActivity {
     int sideIndex = 0;
     int numCards = 2;
 
-
     //  create variables to hold textviews
     private TextView textCard;
-    private TextView textTip;
+    //private TextView textTip;
 
 
     @Override
@@ -56,6 +55,9 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //  Enable Back Button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //From content_play.xml
         textCard = (TextView) findViewById(R.id.textViewCard);

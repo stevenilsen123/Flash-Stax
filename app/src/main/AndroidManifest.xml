@@ -48,7 +48,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.mercy.flashstax.PlayActivity" />
+                android:value="edu.mercy.flashstax.Main2Activity" />
         </activity>
     </application>
 
