@@ -147,7 +147,10 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("this is a test","test");
+                //return to previous screen
+                Intent returnIntent = new Intent();
+                setResult(RESULT_CANCELED, returnIntent);
+                finish();
             }
         });
     }
