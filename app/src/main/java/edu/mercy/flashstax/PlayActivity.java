@@ -62,16 +62,6 @@ public class PlayActivity extends AppCompatActivity {
         //From content_play.xml
         textCard = (TextView) findViewById(R.id.textViewCard);
 
-        //  Display helper text?
-        //textTip = (TextView) findViewById(R.id.textViewTip);
-
-        //  Get arrays from strings.xml
-        Resources res = getResources();
-        card1 = res.getStringArray(R.array.card1);
-        card2 = res.getStringArray(R.array.card2);
-        card3 = res.getStringArray(R.array.card3);
-
-
         //  Flip Button, flip card value.
         buttonFlip=(Button)findViewById(R.id.buttonFlip);
         buttonFlip.setOnClickListener(new View.OnClickListener() {

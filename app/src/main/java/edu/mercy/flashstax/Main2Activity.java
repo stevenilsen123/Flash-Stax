@@ -52,8 +52,6 @@ public class Main2Activity extends AppCompatActivity
     static final int EDIT_STACK_REQUEST = 1;
     String input;
 
-    private Button buttonPlay;
-
     //  List view stuff
     //  **************** Note, add to list method at bottom - 'addListItem'
     ArrayList<String> listStacks = new ArrayList<>();
@@ -164,16 +162,6 @@ public class Main2Activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //  Play Button, go to play screen.
-        buttonPlay=(Button)findViewById(R.id.buttonPlay);
-        buttonPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),PlayActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
