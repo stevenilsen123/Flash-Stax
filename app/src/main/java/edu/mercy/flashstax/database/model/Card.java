@@ -16,7 +16,6 @@ public class Card implements Serializable {
     private boolean mActiveFlag;
     private Date mDateTimeCR;
     private Date mDateTimeLM;
-    private Stack mStack;
 
     public Card() {}
 
@@ -48,6 +47,7 @@ public class Card implements Serializable {
     public void setCardName(String mCardName) {
         this.mCardName = mCardName;
     }
+
     public String getFrontText() {
         return mFrontText;
     }
@@ -60,6 +60,14 @@ public class Card implements Serializable {
     public void setBackText(String mBackText) {
         this.mBackText = mBackText;
     }
+    public String getTextByIndex(int index) {
+        if (index == 0) {
+            return getFrontText();
+        } else {
+            return getBackText();
+        }
+    }
+
     public boolean getActiveFlag() {
         return mActiveFlag;
     }
@@ -78,6 +86,4 @@ public class Card implements Serializable {
     public void setDateTimeLM(Date mDateTimeLM) {
         this.mDateTimeLM = mDateTimeLM;
     }
-    public Stack getStack() { return mStack; }
-    public void setStack(Stack mStack) { this.mStack = mStack; }
 }

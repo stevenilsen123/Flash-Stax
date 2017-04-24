@@ -154,6 +154,13 @@ public class StackDAO {
 		stack.setActiveFlag(cursor.getInt(3) > 0);
 		stack.setDateTimeCR(cursor.getInt(4));
 		stack.setDateTimeLM(cursor.getInt(5));
+
+		// get all cards of this stack
+		int id = stack.getId();
+		CardDAO cardDao = new CardDAO(mContext);
+		List<Card> listCards = cardDao.getCardsOfStack(id);
+		stack.setCards(listCards);
+
 		return stack;
 	}
 

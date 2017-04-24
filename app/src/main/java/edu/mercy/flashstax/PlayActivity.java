@@ -19,6 +19,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
+import edu.mercy.flashstax.database.dao.StackDAO;
+import edu.mercy.flashstax.database.model.Card;
+import edu.mercy.flashstax.database.model.Stack;
+
 //----------------------------------------------------------------------
 //  This class handles the play screen, which displays cards and their
 //  front/back text.  The cards can be cycled through.
@@ -29,20 +35,20 @@ public class PlayActivity extends AppCompatActivity {
     //------------------------------------
     //  Declarations
     //------------------------------------
-    final Context context = this;
-    //  Create arrays to later pull in data from strings.xml
-    String[] card1;
-    String[] card2;
-    String[] card3;
+    String passedStackName;
+    StackDAO stackDAO;
+    Stack stack;
+    List<Card> listCards;
 
     //  Create button holder variables
     private Button buttonFlip;
     private Button buttonNext;
+    private Button buttonFinished;
 
     //  flags
     int cardIndex = 0;
     int sideIndex = 0;
-    int numCards = 2;
+    int numCards;
 
     //  create variables to hold textviews
     private TextView textCard;
@@ -56,11 +62,18 @@ public class PlayActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //  Enable Back Button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  disable Back Button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        passedStackName = getIntent().getStringExtra("stackName");
+        stackDAO = new StackDAO(getApplicationContext());
+        stack = stackDAO.getStackByName(passedStackName);
+        listCards = stack.getCards();
+        numCards = listCards.size();
 
         //From content_play.xml
         textCard = (TextView) findViewById(R.id.textViewCard);
+        textCard.setText(listCards.get(0).getFrontText());
 
         //  Flip Button, flip card value.
         buttonFlip=(Button)findViewById(R.id.buttonFlip);
@@ -89,6 +102,15 @@ public class PlayActivity extends AppCompatActivity {
                 previousCard();
             }
         });
+        //  Finished Button, go back to main activity.
+        buttonFinished=(Button)findViewById(R.id.buttonFinished);
+        buttonFinished.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //  Call finished method
+                finished();
+            }
+        });
 
     }//End of onCreate
 
@@ -98,22 +120,17 @@ public class PlayActivity extends AppCompatActivity {
     //--------------------------------
     private void nextCard () {
         //  Check if at end of stack/list
-        if (cardIndex >= numCards) {
+        if (cardIndex >= numCards-1) {
             //  if at end, cycle back to start
             cardIndex = 0;
             sideIndex = 0;
-            textCard.setText(card1[sideIndex]);
+            textCard.setText(listCards.get(cardIndex).getTextByIndex(sideIndex));
         }
         else {
             //  else increment through stack/list
             cardIndex++;
             sideIndex = 0;
-            if (cardIndex == 1) {
-                textCard.setText(card2[sideIndex]);
-            }
-            else {
-                textCard.setText(card3[sideIndex]);
-            }
+            textCard.setText(listCards.get(cardIndex).getTextByIndex(sideIndex));
         }
     }//end of nextCard
 
@@ -122,41 +139,12 @@ public class PlayActivity extends AppCompatActivity {
     //--------------------------------
     private void flipCard () {
         //  Check card index, flip then display
-
-        //  placeholder Card 1
-        if (cardIndex == 0) {
-            if (sideIndex == 0) {
-                sideIndex = 1;
-                textCard.setText(card1[sideIndex]);
-            }
-            else {
-                sideIndex = 0;
-                textCard.setText(card1[sideIndex]);
-            }
+        if (sideIndex == 0) {
+            sideIndex = 1;
+        } else {
+            sideIndex = 0;
         }
-        // placeholder card 2
-        else if (cardIndex == 1) {
-            if (sideIndex == 0) {
-                sideIndex = 1;
-                textCard.setText(card2[sideIndex]);
-            }
-            else {
-                sideIndex = 0;
-                textCard.setText(card2[sideIndex]);
-            }
-        }
-
-        //  placeholder card 3
-        else {
-            if (sideIndex == 0) {
-                sideIndex = 1;
-                textCard.setText(card3[sideIndex]);
-            }
-            else {
-                sideIndex = 0;
-                textCard.setText(card3[sideIndex]);
-            }
-        }
+        textCard.setText(listCards.get(cardIndex).getTextByIndex(sideIndex));
 
     }//end of flipCard
 
@@ -167,24 +155,29 @@ public class PlayActivity extends AppCompatActivity {
         //  Check if at end of stack/list
         if (cardIndex == 0) {
             //  if at start, cycle to end
-            cardIndex = numCards;
+            cardIndex = numCards-1;
             sideIndex = 0;
-            textCard.setText(card3[sideIndex]);
+            textCard.setText(listCards.get(cardIndex).getTextByIndex(sideIndex));
         }
         else {
             //  else decrement through stack/list
             cardIndex--;
             sideIndex = 0;
-
-            //  placeholder card 2
-            if (cardIndex == 1) {
-                textCard.setText(card2[sideIndex]);
-            }
-            //  placeholder card 1
-            else {
-                textCard.setText(card1[sideIndex]);
-            }
+            textCard.setText(listCards.get(cardIndex).getTextByIndex(sideIndex));
         }
     }//end of previousCard
+
+    //--------------------------------
+    //  Method to exit back to the main screen
+    //--------------------------------
+    private void finished () {
+        Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
+        startActivity(intent);
+    }//end of finished
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 
 }//end of class

@@ -25,5 +25,5 @@
     <string name="add_stack_message">Press + to add a new stack!</string>
 
     <string name="fake_stack_name">Fake Stack</string>
-    <string name="title_activity_play">PlayActivity</string>
+    <string name="title_activity_play">Play Stack</string>
 </resources>

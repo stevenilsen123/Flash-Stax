@@ -1,6 +1,7 @@
 package edu.mercy.flashstax.database.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Stack implements Serializable {
 
@@ -13,15 +14,18 @@ public class Stack implements Serializable {
     private boolean mActiveFlag;
     private int mDateTimeCR;
     private int mDateTimeLM;
+    private List<Card> mCards;
 
     public Stack() {}
 
-    public Stack(String name, String category, int index, boolean activeFlag, int dateTimeCR, int dateTimeLM) {
+    public Stack(String name, String category, int index, boolean activeFlag, int dateTimeCR,
+                 int dateTimeLM, List<Card> cards) {
         this.mName = name;
         this.mCategory = category;
         this.mActiveFlag = activeFlag;
         this.mDateTimeCR = dateTimeCR;
         this.mDateTimeLM = dateTimeLM;
+        this.mCards = cards;
     }
 
     public int getId() {
@@ -58,4 +62,6 @@ public class Stack implements Serializable {
     public void setDateTimeLM(int mDateTimeLM) {
         this.mDateTimeLM = mDateTimeLM;
     }
+    public List<Card> getCards() { return mCards; }
+    public void setCards(List<Card> mCards) { this.mCards = mCards; }
 }

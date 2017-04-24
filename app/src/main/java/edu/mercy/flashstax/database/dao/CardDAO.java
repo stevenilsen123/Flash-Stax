@@ -111,7 +111,7 @@ public class CardDAO {
 		List<Card> listCards = new ArrayList<Card>();
 
 		Cursor cursor = mDatabase.query(dbHelper.TABLE_CARDS, mAllColumns,
-				dbHelper.COL_STACK_ID + " = ?",
+				dbHelper.COL_CARD_STACK_ID + " = ?",
 				new String[] { String.valueOf(id) }, null, null, null);
 
 		cursor.moveToFirst();
@@ -135,13 +135,6 @@ public class CardDAO {
 		card.setActiveFlag(cursor.getInt(5) > 0);
 		card.setDateTimeCR(new Date(cursor.getLong(6)));
 		card.setDateTimeLM(new Date(cursor.getLong(7)));
-
-		// get The stack by id
-		int stackId = cursor.getInt(8);
-		StackDAO dao = new StackDAO(mContext);
-		Stack stack = dao.getStackById(stackId);
-		if (stack != null)
-			card.setStack(stack);
 
 		return card;
 	}

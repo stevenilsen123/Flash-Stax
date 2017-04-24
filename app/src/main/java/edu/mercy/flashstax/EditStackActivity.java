@@ -48,6 +48,7 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
     
     static final int EDIT_CARD_REQUEST = 1;
     static final int ADD_CARD_REQUEST = 2;
+    static final int PLAY_STACK_REQUEST = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,21 @@ public class EditStackActivity extends AppCompatActivity implements OnItemClickL
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("this is a test","test");
+                // make sure there are cards in the stack
+                boolean isListEmpty = false;
+                if (cardsList.getCount() == 0) {
+                    isListEmpty = true;
+                }
+
+                // launch play activity if there are cards
+                if (isListEmpty == false) {
+                    Intent intent = new Intent(getApplicationContext(), PlayActivity.class);
+                    intent.putExtra("stackName", passedStackName);
+                    startActivityForResult(intent, PLAY_STACK_REQUEST);
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Add a card to your stack first!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
