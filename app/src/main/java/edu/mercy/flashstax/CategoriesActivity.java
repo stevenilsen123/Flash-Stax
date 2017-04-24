@@ -53,7 +53,7 @@ public class CategoriesActivity extends AppCompatActivity
     ArrayList<String> listCategories = new ArrayList<>();
     ArrayAdapter<String> adapter;
     private ListView categoriesListView;
-
+/////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
